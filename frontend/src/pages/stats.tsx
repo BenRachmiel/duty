@@ -11,7 +11,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  type TooltipProps,
 } from "recharts";
 
 import { fetchStats } from "@/api";
@@ -70,13 +69,14 @@ export function StatsPage() {
     [data?.daily_workload],
   );
 
-  const renderTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
-    if (!active || !payload?.length) return null;
+  const renderTooltip = ({ active, payload, label }: Record<string, unknown>) => {
+    const items = payload as ReadonlyArray<{ color?: string; name?: string; value?: number }> | undefined;
+    if (!active || !items?.length) return null;
     return (
       <div className="rounded-md border border-border bg-popover px-3 py-2 text-sm text-popover-foreground shadow-md">
-        <p className="mb-1 font-medium">{label}</p>
-        {payload.map((entry) => (
-          <p key={entry.dataKey} className="text-popover-foreground">
+        <p className="mb-1 font-medium">{String(label)}</p>
+        {items.map((entry, i) => (
+          <p key={i} className="text-popover-foreground">
             <span className="mr-1.5 inline-block size-2.5 rounded-sm" style={{ backgroundColor: entry.color }} />
             {entry.name}: {entry.value}
           </p>
