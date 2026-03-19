@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: backend
+    volumes:
+      - db-data:/data
+    environment:
+      DATABASE_URL: "sqlite+aiosqlite:///data/duty.db"
+
+  frontend:
+    build: frontend
+
+  nginx:
+    build: nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  db-data:

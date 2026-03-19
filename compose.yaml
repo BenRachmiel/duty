@@ -1,0 +1,21 @@
+services:
+  backend:
+    image: ghcr.io/benrachmiel/duty/images/backend:latest
+    volumes:
+      - db-data:/data
+    environment:
+      DATABASE_URL: "sqlite+aiosqlite:///data/duty.db"
+
+  frontend:
+    image: ghcr.io/benrachmiel/duty/images/frontend:latest
+
+  nginx:
+    build: nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  db-data:

@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ruff_cache/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# SQLite
+*.db
+*.db-journal
+*.db-wal
+
+# Nix / direnv
+.direnv/
+
+# VCS
+.jj/
+
+# IDE / tools
+.claude/
+CLAUDE.md
+
+docs/
