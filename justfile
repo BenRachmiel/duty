@@ -63,6 +63,16 @@ typecheck:
 build-front:
     cd frontend && npm run build
 
+# smoke test: build, compose up, check health, tear down
+push-check:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    trap 'docker compose -f compose.dev.yaml logs; docker compose -f compose.dev.yaml down -v' EXIT
+    docker compose -f compose.dev.yaml up -d --build --wait --wait-timeout 30
+    curl -sf http://localhost:8080/api/tags > /dev/null
+    curl -sf http://localhost:8080/ > /dev/null
+    echo "Smoke test passed"
+
 # seed database with test data (500 people, duties, rules) — requires running backend
 seed:
     cd backend && {{venv}}/python seed.py

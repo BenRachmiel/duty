@@ -5,6 +5,11 @@ services:
       - db-data:/data
     environment:
       DATABASE_URL: "sqlite+aiosqlite:////data/duty.db"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   frontend:
     image: ghcr.io/benrachmiel/duty/images/frontend:latest
