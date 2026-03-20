@@ -4,7 +4,7 @@ services:
     volumes:
       - db-data:/data
     environment:
-      DATABASE_URL: "sqlite+aiosqlite:///data/duty.db"
+      DATABASE_URL: "sqlite+aiosqlite:////data/duty.db"
 
   frontend:
     image: ghcr.io/benrachmiel/duty/images/frontend:latest
