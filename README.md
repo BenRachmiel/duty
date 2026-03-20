@@ -36,6 +36,18 @@ just dev
 
 Starts the FastAPI backend and Vite dev server with hot reload.
 
+### Smoke test
+
+```
+just push-check
+```
+
+Builds images locally, brings up the full stack via `compose.dev.yaml`, verifies backend and frontend respond through nginx, then tears down. Also runs in CI on every PR (`.github/workflows/compose-smoke.yml`).
+
+### Health endpoint
+
+`GET /healthz` — returns `{"status": "ok"}`. Used by Docker Compose healthchecks to gate container readiness.
+
 ## Stack
 
 | Layer | Tech |
